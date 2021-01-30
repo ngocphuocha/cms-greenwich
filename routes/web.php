@@ -41,8 +41,16 @@ Route::group([
 ], function () {
   Route::get('/home', 'HomeController@traineeHome')->name('home');
   Route::get('users/{id}/edit', 'UserController@traineeEdit')->name('users.edit')->middleware('is.owner');
-  Route::get('users/{id}', 'UserController@traineeUpdate')->name('users.update')->middleware('is.owner');
+  Route::put('users/{id}', 'UserController@traineeUpdate')->name('users.update')->middleware('is.owner');
   Route::get('users/{id}/courses', 'TraineeCourseController@show')->name('courses.show')->middleware('is.owner');
+});
+Route::group([
+  'prefix' => 'trainer',
+  'as' => 'trainer.',
+  'middleware' => 'is.trainer'
+], function () {
+  Route::get('/home', 'HomeController@trainerHome')->name('home');
+  Route::get('users/{id}/courses', 'TrainerCourseController@show')->name('courses.show')->middleware('is.owner');
 });
 // Route::resource('users', 'UserController');
 // Route::resource('roles', 'RoleController');

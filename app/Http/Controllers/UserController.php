@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
+use App\Http\Requests\EditTraineeRequest;
 
 class UserController extends Controller
 {
@@ -95,6 +96,15 @@ class UserController extends Controller
     $user->update($data);
     $user->roles()->sync($request->role_id);
     return view('admins.success');
+  }
+  public function traineeUpdate(EditTraineeRequest $request, $id)
+  {
+    $data = $request->all();
+    $data['password'] = bcrypt($data['password']);
+    $user = User::find($id);
+    $user->update($data);
+    // dd($user->toArray());
+    return view('trainees.success');
   }
 
   /**

@@ -50,14 +50,17 @@ class LoginController extends Controller
       $request->session()->regenerate();
       $user = \Auth::user();
       // dd($user->toArray());
-      $roles = $user->roles->pluck('id')->all(); // all() to cast colection to array
+      $roles = $user->roles->pluck('id')->all(); // method all() to cast colection to array
       // dd($roles);
       if (in_array(Role::ADMIN_ROLE, $roles)) {
         return redirect()->route('admin.roles.index');
       } elseif (in_array(Role::TRAINNE_ROLE, $roles)) {
         return redirect()->route('trainee.home');
+      } elseif (in_array(Role::TRAINER_ROLE, $roles)) {
+        return redirect()->route('trainer.home');
+      } else {
+        return redirect('home');
       }
-      return redirect('home');
     }
     return redirect()->back()->withInput()
       ->with(['error' => 'Wrong email or password !']);

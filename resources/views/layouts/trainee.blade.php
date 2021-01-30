@@ -83,7 +83,10 @@
                               <a class="nav-link" href="{{route('trainee.courses.show',['id'=> \Auth::id()])}}">View courses</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link disabled" href="#">Disabled</a>
+                              <form class="form-inline my-2 my-lg-0" action="{{route('logout')}}" method="POST">
+                                @csrf
+                                <input type="submit" value="Logout">
+                            </form>
                             </li>
                           </ul>
                     </div>

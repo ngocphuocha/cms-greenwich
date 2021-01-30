@@ -4,21 +4,35 @@
 <div class="row">
   <div class="col-5">
   <h2>Edit Your Profile</h2>
-  <form action="" method="POST">
+  <form action="{{route('trainee.users.update', $user->id) }}" method="POST">
+    @csrf
+    @method('PUT')
     <div class="form-group">
       <label for="">Name</label>
-      <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-      <small id="helpId" class="form-text text-muted">Help text</small>
+      <input type="text" class="form-control" value="{{ $user->name }}" name="name" id="" aria-describedby="helpId" placeholder="">
+      <small id="helpId" class="form-text text-muted">
+        @if ($errors->has('name'))
+        <p style="color: red;">{{ $errors->first('name') }}</p>
+        @endif
+      </small>
     </div>
     <div class="form-group">
       <label for="">New Password</label>
-      <input type="text" class="form-control" name="password" id="" aria-describedby="helpId" placeholder="">
-      <small id="helpId" class="form-text text-muted">Help text</small>
+      <input type="text" class="form-control" value="{{ old('password') }}" name="password" id="" aria-describedby="helpId" placeholder="">
+      <small id="helpId" class="form-text text-muted">
+        @if ($errors->has('password'))
+        <p style="color: red;">{{ $errors->first('password') }}</p>
+        @endif
+      </small>
     </div>
     <div class="form-group">
       <label for="">Password confirm</label>
-      <input type="text" class="form-control" name="password_confirmation" id="" aria-describedby="helpId" placeholder="">
-      <small id="helpId" class="form-text text-muted">Help text</small>
+      <input type="text" class="form-control" value="{{ old('password_confirmation') }}" name="password_confirmation" id="" aria-describedby="helpId" placeholder="">
+      <small id="helpId" class="form-text text-muted">
+        @if ($errors->has('password_confirmation'))
+        <p style="color: red;">{{ $errors->first('password_confirmation') }}</p>
+        @endif
+      </small>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Update</button>

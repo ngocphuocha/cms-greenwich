@@ -82,6 +82,9 @@
             <div class="content">
                 <div class="title m-b-md">
                     WelCome To CMS
+                    @if (session()->has('error'))
+                        <p style="color: red">{{session()->get('error')}}</p>
+                    @endif
                 </div>
 
                 <div class="links">
