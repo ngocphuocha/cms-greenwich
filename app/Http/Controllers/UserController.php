@@ -81,6 +81,12 @@ class UserController extends Controller
     // dd($user->toArray());
     return view('trainees.edit', compact('user'));
   }
+  public function trainerEdit($id)
+  {
+    $user = User::find($id);
+    // dd($user->toArray());
+    return view('trainers.edit', compact('user'));
+  }
   /**
    * Update the specified resource in storage.
    *
@@ -105,6 +111,15 @@ class UserController extends Controller
     $user->update($data);
     // dd($user->toArray());
     return view('trainees.success');
+  }
+  public function trainerUpdate(EditTraineeRequest $request, $id)
+  {
+    $data = $request->all();
+    $data['password'] = bcrypt($data['password']);
+    $user = User::find($id);
+    $user->update($data);
+    // dd($user->toArray());
+    return view('trainers.success');
   }
 
   /**

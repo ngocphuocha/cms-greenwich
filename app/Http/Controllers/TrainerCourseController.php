@@ -47,7 +47,7 @@ class TrainerCourseController extends Controller
   public function show($id)
   {
     $trainerCourses = TrainerCourse::with('course')->where('user_id', $id)->get();
-    return view('trainer.courses', compact('trainerCourses'));
+    return view('trainers.courses', compact('trainerCourses'));
   }
 
   /**

@@ -50,6 +50,8 @@ Route::group([
   'middleware' => 'is.trainer'
 ], function () {
   Route::get('/home', 'HomeController@trainerHome')->name('home');
+  Route::get('users/{id}/edit', 'UserController@trainerEdit')->name('users.edit')->middleware('is.owner');
+  Route::put('users/{id}', 'UserController@trainerUpdate')->name('users.update')->middleware('is.owner');
   Route::get('users/{id}/courses', 'TrainerCourseController@show')->name('courses.show')->middleware('is.owner');
 });
 // Route::resource('users', 'UserController');

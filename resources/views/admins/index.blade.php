@@ -43,9 +43,11 @@
             @endif
         </tbody>
       </table>
-      <div class="row justify-content-center pt-4">
+      @if (!isset($role))
+      <div class="row justify-content-center ">
         <div class="col-5">
           {{$users->links()}}
         </div>
       </div>
+      @endif
 @endsection

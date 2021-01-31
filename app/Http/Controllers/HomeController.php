@@ -31,6 +31,6 @@ class HomeController extends Controller
   }
   public function trainerHome()
   {
-    return view('trainer.home');
+    return view('trainers.home');
   }
 }
