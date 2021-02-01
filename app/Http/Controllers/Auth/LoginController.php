@@ -46,7 +46,7 @@ class LoginController extends Controller
   public function login(Request $request)
   {
     $data = $request->only('email', 'password');
-    if (\Auth::attempt($data)) {
+    if (\Auth::attempt($data)) { // login with email and password
       $request->session()->regenerate();
       $user = \Auth::user();
       // dd($user->toArray());
@@ -54,10 +54,12 @@ class LoginController extends Controller
       // dd($roles);
       if (in_array(Role::ADMIN_ROLE, $roles)) {
         return redirect()->route('admin.roles.index');
-      } elseif (in_array(Role::TRAINNE_ROLE, $roles)) {
+      } elseif (in_array(Role::TRAINEE_ROLE, $roles)) {
         return redirect()->route('trainee.home');
       } elseif (in_array(Role::TRAINER_ROLE, $roles)) {
         return redirect()->route('trainer.home');
+      } elseif (in_array(Role::TRAINING_STAFF_ROLE, $roles)) {
+        return redirect()->route('training-staff.home');
       } else {
         return redirect('home');
       }
@@ -68,6 +70,6 @@ class LoginController extends Controller
   public function logout(Request $request)
   {
     $this->guard()->logout();
-    return redirect('/');
+    return redirect('/'); // view welcome in web route
   }
 }

@@ -33,4 +33,8 @@ class HomeController extends Controller
   {
     return view('trainers.home');
   }
+  public function trainingstaffHome()
+  {
+    return view('training-staffs.home');
+  }
 }

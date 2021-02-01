@@ -2,11 +2,10 @@
 
 namespace App\Http\Middleware;
 
-
-use Closure;
 use App\Role;
+use Closure;
 
-class IsTrainee
+class IsTrainingStaff
 {
   /**
    * Handle an incoming request.
@@ -23,7 +22,7 @@ class IsTrainee
       // dd($user);
       $roles = $user->roles->pluck('id')->all();
       // dd($roles);
-      if (in_array(Role::TRAINEE_ROLE, $roles)) {
+      if (in_array(Role::TRAINING_STAFF_ROLE, $roles)) {
         return $next($request);
       }
       return redirect()->back()->with(['error' => 'You dont have permission']);
