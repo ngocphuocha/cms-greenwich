@@ -22,11 +22,16 @@
     </div>
     <div class="form-group">
       <label for="password">Password</label>
-      <input type="password" name="password" value="{{ $user->name }}" class="form-control" id="password"
+      <input type="password" name="password" value="{{old('password')}}" class="form-control" id="password"
         autocomplete="off">
       @if($errors->has('password'))
       <p style="color: red;">{{ $errors->first('password') }}</p>
       @endif
+    </div>
+    <div class="form-group">
+      <label for="">Password Confirm</label>
+      <input type="password" class="form-control" name="password_confirmation" value="{{old('password_confirmation')}}"
+        id="" aria-describedby="helpId" placeholder="">
     </div>
     <select name="role_id[]" id="role" class="form-control form-control-lg" multiple>
       @php

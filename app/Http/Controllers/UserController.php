@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditTraineeRequest;
+use App\Http\Requests\EditUserRequest;
+use App\Repositories\Interfaces\IUserRepository;
 
 class UserController extends Controller
 {
+  private $userRepo;
+  public function __construct(IUserRepository $userRepo)
+  {
+    $this->userRepo = $userRepo;
+  }
   /**
    * Display a listing of the resource.
    *
@@ -16,9 +24,8 @@ class UserController extends Controller
    */
   public function index()
   {
-    // \DB::enableQueryLog();
-    $users = User::where('id', '<>', 1)->paginate(8);
-    // dd(\DB::getQueryLog());
+    $users = $this->userRepo->getAll();
+    // dd($users->toArray());
     return view('admins.index', compact('users'));
   }
 
@@ -29,7 +36,8 @@ class UserController extends Controller
    */
   public function create()
   {
-    $roles = Role::all();
+    $roles = $this->userRepo->getRoles();
+    // dd($roles->toArray());
     return view('admins.create', compact('roles'));
   }
 
@@ -39,14 +47,9 @@ class UserController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function store(Request $request)
+  public function store(CreateUserRequest $request)
   {
-    $data = $request->all();
-    // dd($data['role_id']);
-    $data['password'] = bcrypt($data['password']);
-    $user = User::create($data);
-    $user->roles()->attach($request->role_id, ['created_at' => now(), 'updated_at' => now()]);
-    // $user->roles()->attach([]);
+    $user = $this->userRepo->store($request);
     return redirect()->route('admin.users.index')->with(['success' => 'Success']);
   }
 
@@ -69,21 +72,21 @@ class UserController extends Controller
    */
   public function edit($id)
   {
-    $roles = Role::all();
-    $user = User::with('roles')->find($id);
+    $roles = $this->userRepo->getRoles();
+    $user = $this->userRepo->edit($id);
     // dd($user->roles);
     return view('admins.edit', compact('user', 'roles'));
   }
 
   public function traineeEdit($id)
   {
-    $user = User::find($id);
+    $user = $this->userRepo->get($id);
     // dd($user->toArray());
     return view('trainees.edit', compact('user'));
   }
   public function trainerEdit($id)
   {
-    $user = User::find($id);
+    $user = $this->userRepo->get($id);
     // dd($user->toArray());
     return view('trainers.edit', compact('user'));
   }
@@ -94,13 +97,9 @@ class UserController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, $id)
+  public function update(EditUserRequest $request, $id)
   {
-    $user = User::find($id);
-    $data = $request->except('_token', '_method', 'role_id');
-    $data['password']  = bcrypt($data['password']);
-    $user->update($data);
-    $user->roles()->sync($request->role_id);
+    $this->userRepo->update($request, $id);
     return view('admins.success');
   }
   public function traineeUpdate(EditTraineeRequest $request, $id)

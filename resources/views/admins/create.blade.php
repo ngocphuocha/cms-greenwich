@@ -27,6 +27,11 @@
       <p style="color: red;">{{ $errors->first('password') }}</p>
       @endif
     </div>
+    <div class="form-group">
+      <label for="">Password Confirm</label>
+      <input type="password" class="form-control" name="password_confirmation" value="{{old('password_confirmation')}}"
+        id="" aria-describedby="helpId" placeholder="">
+    </div>
     {{-- single role list add --}}
     <select name="role_id" id="role" class="form-control form-control">
       @foreach ($roles as $role)

@@ -8,26 +8,26 @@ use App\Role;
 
 class IsAdmin
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if (\Auth::check()) {
-            // dd('d');
-            $user = \Auth::user();
-            // dd($user);
-            $roles = $user->roles->pluck('id')->all();
-            // dd($roles);
-            if (in_array(Role::ADMIN_ROLE, $roles)) {
-                return $next($request);
-            }
-            return redirect()->back()->with(['error' => 'You dont have permission']);
-        }
-        return redirect()->back()->with(['error' => 'You dont have permission']);
+  /**
+   * Handle an incoming request.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  \Closure  $next
+   * @return mixed
+   */
+  public function handle($request, Closure $next)
+  {
+    if (\Auth::check()) {
+      // dd('d');
+      $user = \Auth::user();
+      // dd($user);
+      $roles = $user->roles->pluck('id')->all();
+      // dd($roles);
+      if (in_array(Role::ADMIN_ROLE, $roles)) {
+        return $next($request);
+      }
+      return redirect()->back()->with(['error' => 'You dont have permission']);
     }
+    return redirect()->back()->with(['error' => 'You dont have permission']);
+  }
 }
