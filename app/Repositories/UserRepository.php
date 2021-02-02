@@ -40,6 +40,7 @@ class UserRepository implements IUserRepository
   {
     return User::with('roles')->find($id);
   }
+  // update user 
   public function update(EditUserRequest $request, $id)
   {
     $user = $this->get($id);
@@ -47,5 +48,18 @@ class UserRepository implements IUserRepository
     $data['password']  = bcrypt($data['password']);
     $user->update($data);
     $user->roles()->sync($request->role_id);
+  }
+  // update trainee
+  // public fu
+  // delete user with id
+  public function deleteUser($id)
+  {
+    try {
+      $user = $this->get($id);
+      $user->roles()->detach();
+      $user->delete();
+    } catch (\Exception $e) {
+      return $e . ' [Can not delete this user (May be this user has been assign to course)]';
+    }
   }
 }

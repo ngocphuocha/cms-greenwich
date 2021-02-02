@@ -129,13 +129,7 @@ class UserController extends Controller
    */
   public function destroy($id)
   {
-    try {
-      $user = User::find($id);
-      $user->roles()->detach();
-      $user->delete();
-    } catch (\Exception $e) {
-      return 'Can not delete this user (May be this user has been assign to course)';
-    }
+    $this->userRepo->deleteUser($id);
     return redirect()->route('admin.users.index');
   }
 }

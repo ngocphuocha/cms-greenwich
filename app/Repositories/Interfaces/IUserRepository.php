@@ -22,4 +22,9 @@ interface IUserRepository
   public function edit($id);
   // update user
   public function update(EditUserRequest $request, $id);
+
+  // update trainee
+  // public function updateTrainee()
+  // delete user
+  public function deleteUser($id);
 }
