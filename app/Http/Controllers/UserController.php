@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
 use App\User;
-use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditTraineeRequest;
 use App\Http\Requests\EditUserRequest;
@@ -24,7 +23,7 @@ class UserController extends Controller
    */
   public function index()
   {
-    $users = $this->userRepo->getAll();
+    $users = $this->userRepo->getAll(10);
     // dd($users->toArray());
     return view('admins.index', compact('users'));
   }

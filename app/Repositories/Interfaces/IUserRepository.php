@@ -10,7 +10,7 @@ interface IUserRepository
   // get user by id 
   public function get($id);
   // get all user
-  public function getAll();
+  public function getAll($paginate = null);
 
   // get roles of user for create form 
   public function getRoles();
