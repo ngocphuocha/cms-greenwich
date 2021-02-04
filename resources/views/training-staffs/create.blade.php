@@ -3,6 +3,15 @@
 @section('content')
 <div class="row mt-5">
   <div class="col-12">
+    @if (session()->has('success'))
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-primary" role="alert">
+          <strong>{{session()->get('success')}}</strong>
+        </div>
+      </div>
+    </div>
+    @endif
     <h2>Create Trainee Account</h2>
   </div>
   <div class="col">

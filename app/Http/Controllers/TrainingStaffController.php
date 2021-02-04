@@ -22,7 +22,7 @@ class TrainingStaffController extends Controller
   }
   public function trainees(Request $request)
   {
-    $users = User::query();
+    // $users = User::query(); // create query 
     if ($request->has('search')) {
       $users = Role::with(
         ['users' => function ($query) use ($request) {
@@ -63,7 +63,7 @@ class TrainingStaffController extends Controller
     $data['password'] = bcrypt($data['password']);
     $user = User::create($data);
     $user->roles()->attach($request->role_id,  ['created_at' => now(), 'updated_at' => now()]);
-    return 'success';
+    return redirect()->back()->with(['success' => 'Create Trainee Success!']);
   }
 
   /**
