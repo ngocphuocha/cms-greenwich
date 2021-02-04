@@ -99,7 +99,7 @@ class UserController extends Controller
   public function update(EditUserRequest $request, $id)
   {
     $this->userRepo->update($request, $id);
-    return view('admins.success');
+    return redirect()->back()->with(['success' => 'Update success!']);
   }
   public function traineeUpdate(EditTraineeRequest $request, $id)
   {

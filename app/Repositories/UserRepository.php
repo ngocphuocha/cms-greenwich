@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Repositories\Interfaces\IUserRepository;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Role;
 
@@ -58,8 +59,10 @@ class UserRepository implements IUserRepository
     $user = $this->get($id);
     $data = $request->except('_token', '_method', 'role_id');
     $data['password']  = bcrypt($data['password']);
-    $user->update($data);
-    $user->roles()->sync($request->role_id);
+    DB::transaction(function () use ($user, $data, $request) {
+      $user->update($data);
+      $user->roles()->sync($request->role_id);
+    });
   }
   // update trainee
   // public fu
