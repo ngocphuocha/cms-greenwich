@@ -17,9 +17,20 @@ class TrainingStaffController extends Controller
   {
     //
   }
-  public function trainees()
+  public function trainees(Request $request)
   {
-    $users = Role::with('users')->where('id', 4)->get(); // get user with id = 4 in roles table
+    $users = User::query();
+    if ($request->has('search')) {
+      $users = Role::with(
+        ['users' => function ($query) use ($request) {
+          return $query->where('name', 'like', '%' . $request->input('search') . '%');
+        }]
+      )->where('id', 4)->get();
+      // dd($users->toArray());
+    } else {
+      $users = Role::with('users')->where('id', 4)->get(); // get user with id = 4 in roles table
+    }
+
     // dd($users->toArray());
     return view('training-staffs.trainees', compact('users'));
   }
