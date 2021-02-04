@@ -29,6 +29,7 @@ dd($users->toArray());
           <th scope="col">NO.</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
+          <th scope="col" colspan="3">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +38,19 @@ dd($users->toArray());
           <th scope="row">{{$key + 1}}</th>
           <td>{{$trainee->name}}</td>
           <td>{{$trainee->email}}</td>
+          <td><a href="{{route('training-staff.trainees.assign.view', $trainee->id)}}"
+              class="btn btn-outline-success">Assign Course</a>
+          </td>
+          <td><a class="btn btn-outline-dark"
+              href="{{route('training-staff.trainees.edit', ['id' => $trainee->id])}}">Edit</a>
+          </td>
+          <td>
+            <form action="{{route('training-staff.trainees.destroy', $trainee->id)}}" method="post">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-outline-danger">Delete</button>
+            </form>
+          </td>
         </tr>
         @endforeach
       </tbody>

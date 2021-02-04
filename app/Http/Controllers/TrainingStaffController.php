@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditUserRequest;
+use App\Http\Requests\EditTraineeRequest;
 use Illuminate\Http\Request;
 use App\Role;
 use App\User;
+use App\TraineeCourse;
 
 class TrainingStaffController extends Controller
 {
@@ -23,7 +26,7 @@ class TrainingStaffController extends Controller
     if ($request->has('search')) {
       $users = Role::with(
         ['users' => function ($query) use ($request) {
-          return $query->where('name', 'like', '%' . $request->input('search') . '%');
+          return $query->where('name', 'like', "%{$request->input('search')}%");
         }]
       )->where('id', 4)->get();
       // dd($users->toArray());
@@ -84,7 +87,56 @@ class TrainingStaffController extends Controller
   {
     //
   }
+  public function traineeEdit($id)
+  {
 
+    $trainee = User::find($id);
+    return view('training-staffs.edit', compact('trainee'));
+  }
+  // return view assign for trainee with id=?
+  public function traineeAssignView($id)
+  {
+    $user = User::find($id);
+    $traineeCourses = TraineeCourse::with('course')->where('user_id', $user->id)->get(); // get trainee course
+    // dd($traineeCourses->toArray());
+    return view('training-staffs.assign', compact(['user', 'traineeCourses']));
+  }
+  // store assign for trainee with id=?
+  public function traineeAssign(Request $request, $id)
+  {
+    $user = User::find($id); // find user with id
+    // get id of user
+    $data = $request->except('_token');
+    // dd($data['course_id']);
+    // dd($data);
+    $user->traineeCourses()->create($data);
+    return redirect()->back()->with(['success' => 'Add Success!']);
+  }
+  // delete trainee assign
+  public function traineeAssignDelete($id, $course_id)
+  {
+    // \DB::enableQueryLog();
+
+    // dd(\DB::getQueryLog());
+
+    try {
+      TraineeCourse::where('user_id', $id)
+        ->where('course_id', $course_id)
+        ->delete();
+      return redirect()->back()->with(['success' => 'Delete Success!']);
+    } catch (\Exception $e) {
+      return $e . ' [Something error!]';
+    }
+  }
+
+  public function traineeUpdate(Request $request, $id)
+  {
+    $data = $request->except('_token', '_method', 'course_id', 'password_confirmation');
+    $data['password'] = bcrypt($data['password']);
+    $trainee = User::find($id);
+    $trainee->update($data);
+    return 'success';
+  }
   /**
    * Update the specified resource in storage.
    *
@@ -106,5 +158,10 @@ class TrainingStaffController extends Controller
   public function destroy($id)
   {
     //
+  }
+  // trainee 
+
+  public function traineeDestroy($id)
+  {
   }
 }
