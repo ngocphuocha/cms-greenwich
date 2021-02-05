@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Category;
 use App\Course;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
     // share courses list 
     view()->composer(['trainees.courses', 'training-staffs.assign'], function ($view) {
       $view->with('courses', Course::all());
+    });
+    // share categories
+    view()->composer(['training-staffs.course'], function ($view) {
+      $view->with('categories', Category::all());
     });
   }
 }

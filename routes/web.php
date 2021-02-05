@@ -63,13 +63,18 @@ Route::group([
   Route::get('/trainees', 'TrainingStaffController@trainees')->name('trainees'); // list trainee
   Route::get('/users/create', 'TrainingStaffController@create')->name('users.create'); // show form create trainee
   Route::post('/users', 'TrainingStaffController@store')->name('users.store');
-  Route::get('/trainees/{id}/edit', 'TrainingStaffController@traineeEdit')->name('trainees.edit');
+  Route::get('/trainees/{id}/edit', 'TrainingStaffController@traineeEdit')->name('trainees.edit')->middleware('staff.trainee');
   Route::put('/trainees/{id}', 'TrainingStaffController@traineeUpdate')->name('trainees.update');
   // trainee assign
-  Route::get('/trainees/{id}/assign', 'TrainingStaffController@traineeAssignView')->name('trainees.assign.view');
+  Route::get('/trainees/{id}/assign', 'TrainingStaffController@traineeAssignView')->name('trainees.assign.view')->middleware('staff.trainee');
   Route::post('/trainees/{id}', 'TrainingStaffController@traineeAssign')->name('trainees.assign.store');
   Route::delete('/trainees/{id}/delete-assign/{course_id}', 'TrainingStaffController@traineeAssignDelete')->name('trainees.assign.delete');
   // end trainee assign
+  // courses
+
+  Route::get('/courses/create', 'CourseController@create')->name('courses.create'); // create course
+  Route::post('/courses', 'CourseController@store')->name('courses.store');
+  // end courses
   Route::delete('/trainees/{id}', 'TrainingStaffController@traineeDestroy')->name('trainees.destroy'); // delete trainee
 });
 // Route::resource('users', 'UserController');

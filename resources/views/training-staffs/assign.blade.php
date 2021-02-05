@@ -78,6 +78,16 @@ dd($user->traineeCourses()->pluck('course_id')->toArray());
           </div>
         </div>
         @endif
+        {{-- error --}}
+        @if (session()->has('error'))
+        <div class="row">
+          <div class="col">
+            <div class="alert alert-primary" role="alert">
+              <strong>{{session()->get('error')}}</strong>
+            </div>
+          </div>
+        </div>
+        @endif
       </tbody>
     </table>
   </div>

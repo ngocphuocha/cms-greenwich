@@ -4,6 +4,15 @@ dd($users->toArray());
 @extends('layouts.training-staff')
 @section('title', 'Create Trainee')
 @section('content')
+@if (session()->has('success'))
+<div class="row">
+  <div class="col">
+    <div class="alert alert-primary" role="alert">
+      <strong>{{session()->get('success')}}</strong>
+    </div>
+  </div>
+</div>
+@endif
 <div class="row mt-5">
   <div class="col-7">
     <form action="{{route('training-staff.trainees')}}" method="get">

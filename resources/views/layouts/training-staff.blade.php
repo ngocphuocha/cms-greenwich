@@ -87,8 +87,8 @@
                 Home</i>
               <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href=""></a>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{route('training-staff.courses.create')}}">Courses</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"

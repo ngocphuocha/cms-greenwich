@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\TraineeCourse;
 use App\User;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class TraineeCourseController extends Controller
    */
   public function store(Request $request)
   {
-    //
+
   }
 
   /**

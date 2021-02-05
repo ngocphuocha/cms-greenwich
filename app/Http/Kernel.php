@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
     'is.trainee' => \App\Http\Middleware\IsTrainee::class,
     'is.trainer' => \App\Http\Middleware\IsTrainer::class,
     'is.trainingstaff' => \App\Http\Middleware\IsTrainingStaff::class,
+    'staff.trainee' => \App\Http\Middleware\EditTrainee::class,
   ];
 
   /**

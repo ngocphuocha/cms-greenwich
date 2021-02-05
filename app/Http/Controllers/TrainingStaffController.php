@@ -26,7 +26,8 @@ class TrainingStaffController extends Controller
     if ($request->has('search')) {
       $users = Role::with(
         ['users' => function ($query) use ($request) {
-          return $query->where('name', 'like', "%{$request->input('search')}%");
+          return $query->where('name', 'like', "%{$request->input('search')}%") // search with name
+            ->orWhere('email', 'like', "%{$request->input('search')}%"); // search with email
         }]
       )->where('id', 4)->get();
       // dd($users->toArray());
@@ -135,7 +136,7 @@ class TrainingStaffController extends Controller
     $data['password'] = bcrypt($data['password']);
     $trainee = User::find($id);
     $trainee->update($data);
-    return 'success';
+    return redirect()->back()->with(['success' => 'Update Success!']);
   }
   /**
    * Update the specified resource in storage.
@@ -159,9 +160,14 @@ class TrainingStaffController extends Controller
   {
     //
   }
-  // trainee 
+  // trainee destroy
 
   public function traineeDestroy($id)
   {
+    TraineeCourse::where('user_id', $id)->delete();
+    $user = User::find($id);
+    $user->roles()->detach();
+    $user->delete();
+    return redirect()->back()->with(['success' => 'Delete Success!']);
   }
 }
