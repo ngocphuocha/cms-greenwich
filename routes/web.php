@@ -77,7 +77,14 @@ Route::group([
   Route::put('/courses/{id}', 'CourseController@update')->name('courses.update');
   Route::delete('/courses/{course}', 'CourseController@destroy')->name('courses.destroy');
   // end courses
-  Route::delete('/trainees/{id}', 'TrainingStaffController@traineeDestroy')->name('trainees.destroy'); // delete trainee
+  // categories
+  Route::get('/categories', 'CategoryController@index')->name('categories.index');
+  Route::get('/categories/{id}/edit', 'CategoryController@edit')->name('categories.edit');
+  Route::put('/categories/{id}', 'CategoryController@update')->name('categories.update');
+  Route::post('/categories', 'CategoryController@store')->name('categories.store'); // get all categories
+  Route::delete('/categories/{id}', 'CategoryController@destroy')->name('categories.destroy'); // delete category 
+  // end categories
+  Route::delete('/trainees/{id}', 'TrainingStaffController@traineeDestroy')->name('trainees.destroy')->middleware('staff.trainee'); // delete trainee
 });
 // Route::resource('users', 'UserController');
 // Route::resource('roles', 'RoleController');

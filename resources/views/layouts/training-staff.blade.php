@@ -90,6 +90,9 @@
           <li class="nav-item active">
             <a class="nav-link" href="{{route('training-staff.courses.create')}}">Courses</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{route('training-staff.categories.index')}}">Course Categories</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">More</a>
