@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
       $view->with('courses', Course::all());
     });
     // share categories
-    view()->composer(['training-staffs.course'], function ($view) {
+    view()->composer(['training-staffs.course', 'training-staffs.course-edit'], function ($view) {
       $view->with('categories', Category::all());
     });
   }

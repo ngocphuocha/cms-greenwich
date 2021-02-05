@@ -23,9 +23,15 @@ class CourseController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
-  public function create()
+  public function create(Request $request)
   {
-    $courses = Course::with('category')->get();
+    if ($request->has('search')) {
+      $name = $request->input('search');
+      $courses = Course::with(['category'])->where('name', 'LIKE', "%$name%")->paginate();
+      // dd($courses->toArray());
+    } else {
+      $courses = Course::with('category')->paginate(3);
+    }
     // dd($courses->toArray());
     $categories = Category::all();
     return view('training-staffs.course', compact(['categories', 'courses']));
@@ -39,6 +45,10 @@ class CourseController extends Controller
    */
   public function store(Request $request)
   {
+    $request->validate([
+      'name' => 'required',
+      'category_id' => 'required'
+    ]);
     Course::create($request->all());
     return redirect()->back()->with(['success' => 'Add Success!']);
   }
@@ -59,9 +69,10 @@ class CourseController extends Controller
    * @param  \App\Course  $course
    * @return \Illuminate\Http\Response
    */
-  public function edit(Course $course)
+  public function edit($id)
   {
-    //
+    $course = Course::find($id);
+    return view('training-staffs.course-edit', compact('course'));
   }
 
   /**
@@ -71,9 +82,18 @@ class CourseController extends Controller
    * @param  \App\Course  $course
    * @return \Illuminate\Http\Response
    */
-  public function update(Request $request, Course $course)
+  public function update(Request $request, $id)
   {
-    //
+    $request->validate([
+      'name' => 'required|min:3',
+      'category_id' => 'required'
+    ]);
+    $course = Course::find($id);
+    // dd($course->toArray());
+    $course->update($request->all());
+    $course->save();
+    // Course::find($id)->update($request->all());
+    return redirect()->route('training-staff.courses.create');
   }
 
   /**
@@ -84,6 +104,7 @@ class CourseController extends Controller
    */
   public function destroy(Course $course)
   {
-    //
+    Course::destroy($course->id);
+    return redirect()->route('training-staff.courses.create');
   }
 }

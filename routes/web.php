@@ -71,9 +71,11 @@ Route::group([
   Route::delete('/trainees/{id}/delete-assign/{course_id}', 'TrainingStaffController@traineeAssignDelete')->name('trainees.assign.delete');
   // end trainee assign
   // courses
-
   Route::get('/courses/create', 'CourseController@create')->name('courses.create'); // create course
   Route::post('/courses', 'CourseController@store')->name('courses.store');
+  Route::get('/courses/{id}/edit', 'CourseController@edit')->name('courses.edit');
+  Route::put('/courses/{id}', 'CourseController@update')->name('courses.update');
+  Route::delete('/courses/{course}', 'CourseController@destroy')->name('courses.destroy');
   // end courses
   Route::delete('/trainees/{id}', 'TrainingStaffController@traineeDestroy')->name('trainees.destroy'); // delete trainee
 });

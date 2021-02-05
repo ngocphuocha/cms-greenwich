@@ -29,4 +29,8 @@ class CreateUserRequest extends FormRequest
       'password' => ['required', 'confirmed', 'numeric', 'min:6'],
     ];
   }
+  public function messages()
+  {
+    return [];
+  }
 }
