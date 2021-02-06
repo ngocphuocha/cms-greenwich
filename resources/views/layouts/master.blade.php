@@ -76,7 +76,7 @@
 <body>
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Admin Page</a>
+      <a class="navbar-brand" href="{{route('admin.roles.index')}}">Admin Page</a>
       <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
         aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation"></button>
       <div class="collapse navbar-collapse" id="collapsibleNavId">
@@ -84,23 +84,28 @@
           <li class="nav-item active">
             <a class="nav-link" href="{{route('admin.roles.index')}}">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('admin.users.create')}}">Create User</a>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{route('admin.users.create')}}">Create
+              User</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{route('admin.users.index')}}">All
+              Users</a>
+          </li>
+          {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">More</a>
             <div class="dropdown-menu" aria-labelledby="dropdownId">
               <a class="dropdown-item text-bold text-danger" href="{{route('admin.users.index')}}">All Users</a>
-              {{-- <a class="dropdown-item disabled" href="#">Action 2</a> --}}
-            </div>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0" action="{{route('logout')}}" method="POST">
-          @csrf
-          <input type="submit" value="Logout">
-        </form>
-        {{-- <form class="form-inline my-2 my-lg-0">
+          <a class="dropdown-item disabled" href="#">Action 2</a>
+      </div>
+      </li> --}}
+      </ul>
+      <form class="form-inline my-2 my-lg-0" action="{{route('logout')}}" method="POST">
+        @csrf
+        <input type="submit" value="Logout">
+      </form>
+      {{-- <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form> --}}
@@ -111,7 +116,8 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <h1>Welcome admin <i style="color: pink">{{\Auth::user()->name}}</i></h1>
+          <h1>Welcome admin <i style="color: pink">{{\Auth::user()->name}}</i>
+          </h1>
         </div>
       </div>
       @yield('content')

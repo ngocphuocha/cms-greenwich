@@ -64,8 +64,6 @@ class UserRepository implements IUserRepository
       $user->roles()->sync($request->role_id);
     });
   }
-  // update trainee
-  // public fu
   // delete user with id
   public function deleteUser($id)
   {
