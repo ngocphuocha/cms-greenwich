@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
   public function boot()
   {
     // share courses list 
-    view()->composer(['trainees.courses', 'training-staffs.assign'], function ($view) {
+    view()->composer(['trainees.courses', 'training-staffs.assign', 'training-staffs.trainers.assign'], function ($view) {
       $view->with('courses', Course::all());
     });
     // share categories

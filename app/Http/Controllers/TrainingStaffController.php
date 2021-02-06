@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Role;
 use App\User;
 use App\TraineeCourse;
+use App\TrainerCourse;
 
 class TrainingStaffController extends Controller
 {
@@ -90,7 +91,6 @@ class TrainingStaffController extends Controller
   }
   public function traineeEdit($id)
   {
-
     $trainee = User::find($id);
     return view('training-staffs.edit', compact('trainee'));
   }
@@ -169,5 +169,67 @@ class TrainingStaffController extends Controller
     $user->roles()->detach();
     $user->delete();
     return redirect()->back()->with(['success' => 'Delete Success!']);
+  }
+  // trainer
+  public function trainers(Request $request)
+  {
+    if ($request->has('search')) {
+      $users = Role::with(
+        ['users' => function ($query) use ($request) {
+          return $query->where('name', 'like', "%{$request->input('search')}%") // search with name
+            ->orWhere('email', 'like', "%{$request->input('search')}%"); // search with email
+        }]
+      )->where('id', 3)->get();
+      // dd($users->toArray());
+    } else {
+      $users = Role::with('users')->where('id', 3)->get(); // get user with id = 4 in roles table
+    }
+    return view('training-staffs.trainers.index', compact('users'));
+  }
+  public function trainersEdit($id)
+  {
+    $trainer = User::find($id);
+    return view('training-staffs.trainers.edit', compact('trainer'));
+  }
+  public function trainersUpdate(Request $request, $id)
+  {
+    $data = $request->except('_token', '_method', 'course_id', 'password_confirmation');
+    $data['password'] = bcrypt($data['password']);
+    $trainee = User::find($id);
+    $trainee->update($data);
+    return redirect()->back()->with(['success' => 'Update Success!']);
+  }
+  public function trainerAssignView($id)
+  {
+    $user = User::find($id);
+    $trainerCourses = TrainerCourse::with('course')->where('user_id', $user->id)->get(); // get trainee course
+    // dd($traineeCourses->toArray());
+    return view('training-staffs.trainers.assign', compact(['user', 'trainerCourses']));
+  }
+  // store assign for trainee with id=?
+  public function trainerAssign(Request $request, $id)
+  {
+    $user = User::find($id); // find user with id
+    // get id of user
+    $data = $request->except('_token');
+    // dd($data['course_id']);
+    // dd($data);
+    $user->trainerCourses()->create($data);
+    return redirect()->back()->with(['success' => 'Add Success!']);
+  }
+  // delete trainee assign
+  public function trainerAssignDelete($id, $course_id)
+  {
+    // \DB::enableQueryLog();
+
+    // dd(\DB::getQueryLog());
+    try {
+      TrainerCourse::where('user_id', $id)
+        ->where('course_id', $course_id)
+        ->delete();
+      return redirect()->back()->with(['success' => 'Delete Success!']);
+    } catch (\Exception $e) {
+      return $e . ' [Something error!]';
+    }
   }
 }
