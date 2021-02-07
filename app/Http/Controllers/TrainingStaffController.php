@@ -199,6 +199,14 @@ class TrainingStaffController extends Controller
     $trainee->update($data);
     return redirect()->back()->with(['success' => 'Update Success!']);
   }
+  public function trainersDestroy($id)
+  {
+    TrainerCourse::where('user_id', $id)->delete();
+    $user = User::find($id);
+    $user->roles()->detach();
+    $user->delete();
+    return redirect()->back()->with(['success' => 'Delete Success!']);
+  }
   public function trainerAssignView($id)
   {
     $user = User::find($id);
