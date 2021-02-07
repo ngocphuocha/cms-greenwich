@@ -24,6 +24,6 @@ class UserTableSeeder extends Seeder
       ]
     ];
     User::insert($data);
-    factory(User::class, 40)->create();
+    // factory(User::class, 40)->create();
   }
 }
