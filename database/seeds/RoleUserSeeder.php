@@ -16,7 +16,9 @@ class RoleUserSeeder extends Seeder
       'id' => 1,
       'user_id' => 1,
       'role_id' => 1,
+      'created_at' => now(),
+      'updated_at' => now()
     ];
-    RoleUser::create($data);
+    RoleUser::insert($data);
   }
 }

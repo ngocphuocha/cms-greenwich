@@ -18,9 +18,11 @@ class UserTableSeeder extends Seeder
         'email' => 'test@gmail.com',
         'email_verified_at' => now(),
         'password' => bcrypt('1234567'),
+        'created_at' => now(),
+        'updated_at' => now()
       ]
     ];
-    User::create($data);
+    User::insert($data);
     // factory(User::class, 40)->create();
   }
 }
