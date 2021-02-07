@@ -14,16 +14,13 @@ class UserTableSeeder extends Seeder
   {
     $data = [
       [
-        'id' => '1',
         'name' => 'ngocphuoc',
         'email' => 'test@gmail.com',
         'email_verified_at' => now(),
         'password' => bcrypt('1234567'),
-        'created_at' => now(),
-        'updated_at' => now()
       ]
     ];
-    User::insert($data);
+    User::create($data);
     // factory(User::class, 40)->create();
   }
 }
