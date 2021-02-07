@@ -31,7 +31,7 @@ class UserRepository implements IUserRepository
     /* get user with paginate(8 users in 1 page)
     **/
     // return User::where('id', '<>', 1)->paginate(8);
-    return $this->user->where('id', '<>', 1)->paginate($paginate);
+    return $this->user->whereIn('id', [2, 3])->paginate($paginate);
   }
   public function getRoles()
   {
