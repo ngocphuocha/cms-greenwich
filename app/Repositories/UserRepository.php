@@ -35,7 +35,7 @@ class UserRepository implements IUserRepository
   }
   public function getRoles()
   {
-    return $this->role->where('id', '<>', 1)->get();
+    return $this->role->whereIn('id',  [2, 3])->get();
     // return Role::where('id', '<>', 1)->get(); // return role not have id = 1
   }
 
