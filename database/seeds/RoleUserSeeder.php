@@ -13,7 +13,6 @@ class RoleUserSeeder extends Seeder
   public function run()
   {
     $data = [
-      'id' => 1,
       'user_id' => 1,
       'role_id' => 1,
       'created_at' => now(),
