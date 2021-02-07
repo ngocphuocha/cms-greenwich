@@ -99,7 +99,7 @@ Route::group([
   Route::delete('/trainers/{id}', 'TrainingStaffController@trainerDestroy')->name('trainers.destroy')->middleware('staff.trainer');
   // trainee assign
   Route::get('/trainers/{id}/assign', 'TrainingStaffController@trainerAssignView')->name('trainers.assign.view')->middleware('staff.trainer');
-  Route::post('/trainees/{id}', 'TrainingStaffController@trainerAssign')->name('trainers.assign.store');
+  Route::post('/trainers/{id}', 'TrainingStaffController@trainerAssign')->name('trainers.assign.store');
   Route::delete('/trainers/{id}/delete-assign/{course_id}', 'TrainingStaffController@trainerAssignDelete')->name('trainers.assign.delete');
   // end trainee assign
   // end trainer
