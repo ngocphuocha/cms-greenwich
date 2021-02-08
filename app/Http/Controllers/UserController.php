@@ -131,4 +131,11 @@ class UserController extends Controller
     $this->userRepo->deleteUser($id);
     return redirect()->route('admin.users.index');
   }
+  // detail trainee
+  public function traineeDetail($id)
+  {
+    $user = $this->userRepo->get($id);
+    // dd($user);
+    return view('trainees.detail', compact('user'));
+  }
 }

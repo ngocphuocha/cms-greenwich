@@ -34,6 +34,7 @@ Route::group([
   Route::get('/roles', 'RoleController@index')->name('roles.index');
   Route::get('roles/{id}/users', 'RoleController@getUsers')->name('roles.list_users');
 });
+// trainee
 Route::group([
   'prefix' => 'trainee',
   'as' => 'trainee.',
@@ -43,6 +44,7 @@ Route::group([
   Route::get('users/{id}/edit', 'UserController@traineeEdit')->name('users.edit')->middleware('is.owner');
   Route::put('users/{id}', 'UserController@traineeUpdate')->name('users.update')->middleware('is.owner');
   Route::get('users/{id}/courses', 'TraineeCourseController@show')->name('courses.show')->middleware('is.owner');
+  Route::get('/users/{id}', 'UserController@traineeDetail')->name('users.detail')->middleware('is.owner');
 });
 // trainer
 Route::group([
