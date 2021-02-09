@@ -9,9 +9,15 @@ use App\Role;
 use App\User;
 use App\TraineeCourse;
 use App\TrainerCourse;
+use App\Repositories\Interfaces\IUserRepository;
 
 class TrainingStaffController extends Controller
 {
+  private $userRepository;
+  public function __construct(IUserRepository $userRepository)
+  {
+    $this->userRepository = $userRepository;
+  }
   /**
    * Display a listing of the resource.
    *
@@ -68,7 +74,16 @@ class TrainingStaffController extends Controller
     $user->roles()->attach($request->role_id,  ['created_at' => now(), 'updated_at' => now()]);
     return redirect()->back()->with(['success' => 'Create Trainee Success!']);
   }
-
+  public function traineeDetail($id)
+  {
+    $trainee = $this->userRepository->get($id);
+    return view('training-staffs.detail-trainee', compact('trainee'));
+  }
+  public function trainersDetail($id)
+  {
+    $trainer = $this->userRepository->get($id);
+    return view('training-staffs.trainers.detail', compact('trainer'));
+  }
   /**
    * Display the specified resource.
    *

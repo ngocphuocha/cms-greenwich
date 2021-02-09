@@ -69,6 +69,7 @@ Route::group([
   Route::get('/trainees', 'TrainingStaffController@trainees')->name('trainees'); // list trainee
   Route::get('/users/create', 'TrainingStaffController@create')->name('users.create'); // show form create trainee
   Route::post('/users', 'TrainingStaffController@store')->name('users.store');
+  Route::get('/trainees/{id}', 'TrainingStaffController@traineeDetail')->name('trainees.detail')->middleware('staff.trainee');
   Route::get('/trainees/{id}/edit', 'TrainingStaffController@traineeEdit')->name('trainees.edit')->middleware('staff.trainee');
   Route::put('/trainees/{id}', 'TrainingStaffController@traineeUpdate')->name('trainees.update');
   Route::delete('/trainees/{id}', 'TrainingStaffController@traineeDestroy')->name('trainees.destroy')->middleware('staff.trainee'); // delete trainee
@@ -97,14 +98,15 @@ Route::group([
   // trainer
   Route::get('/trainers', 'TrainingStaffController@trainers')->name('trainers.index');
   // Route::post('/trainers', 'TrainingStaffController@trainersStore')->name('trainers.store');
+  Route::get('/trainers/{id}', 'TrainingStaffController@trainersDetail')->name('trainers.detail');
   Route::get('/trainers/{id}/edit', 'TrainingStaffController@trainersEdit')->name('trainers.edit');
   Route::put('/trainers/{id}', 'TrainingStaffController@trainersUpdate')->name('trainers.update');
   Route::delete('/trainers/{id}', 'TrainingStaffController@trainersDestroy')->name('trainers.destroy')->middleware('staff.trainer');
-  // trainee assign
+  // trainer assign
   Route::get('/trainers/{id}/assign', 'TrainingStaffController@trainerAssignView')->name('trainers.assign.view')->middleware('staff.trainer');
   Route::post('/trainers/{id}', 'TrainingStaffController@trainerAssign')->name('trainers.assign.store');
   Route::delete('/trainers/{id}/delete-assign/{course_id}', 'TrainingStaffController@trainerAssignDelete')->name('trainers.assign.delete');
-  // end trainee assign
+
   // end trainer
 
 });

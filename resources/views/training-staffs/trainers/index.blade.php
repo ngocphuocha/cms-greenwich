@@ -9,8 +9,8 @@ dd($users->toArray());
   <div class="col-7">
     <form action="{{route('training-staff.trainers.index')}}" method="get">
       <div class="form-inline">
-        <input type="text" class="form-control" name="search" id=""
-          aria-describedby="helpId" placeholder="Search Trainer">
+        <input type="text" class="form-control" name="search" id="" aria-describedby="helpId"
+          placeholder="Search Trainer">
         <button type="submit" class="btn btn-primary ml-3">Search</button>
       </div>
       <div class="form-group">
@@ -29,7 +29,7 @@ dd($users->toArray());
         <th scope="col">NO.</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
-        <th scope="col" colspan="3">Action</th>
+        <th scope="col" colspan="4">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -38,17 +38,17 @@ dd($users->toArray());
         <th scope="row">{{$key + 1}}</th>
         <td>{{$trainer->name}}</td>
         <td>{{$trainer->email}}</td>
-        <td><a
-            href="{{route('training-staff.trainers.assign.view', $trainer->id)}}"
+        <td><a href="{{route('training-staff.trainers.assign.view', $trainer->id)}}"
             class="btn btn-outline-success">Assign Course</a>
+        </td>
+        <td><a class="btn btn-outline-dark"
+            href="{{route('training-staff.trainers.detail', ['id' => $trainer->id])}}">Detail</a>
         </td>
         <td><a class="btn btn-outline-dark"
             href="{{route('training-staff.trainers.edit', ['id' => $trainer->id])}}">Edit</a>
         </td>
         <td>
-          <form
-            action="{{route('training-staff.trainers.destroy', $trainer->id)}}"
-            method="post">
+          <form action="{{route('training-staff.trainers.destroy', $trainer->id)}}" method="post">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-outline-danger">Delete</button>
