@@ -11,6 +11,15 @@
   </div>
 </div>
 @endif
+@if (session()->has('error'))
+<div class="row">
+  <div class="col">
+    <div class="alert alert-primary" role="alert">
+      <strong>{{session()->get('error')}}</strong>
+    </div>
+  </div>
+</div>
+@endif
 <div class="row">
   <div class="col">
     <form action="{{route('admin.users.update', $user->id)}}" method="POST">
@@ -44,7 +53,7 @@
           <input type="password" class="form-control" name="password_confirmation"
             value="{{old('password_confirmation')}}" id="" aria-describedby="helpId" placeholder="">
         </div>
-        <select name="role_id[]" id="role" class="form-control form-control-lg" multiple>
+        <select name="role_id" id="role" class="form-control form-control-sm">
           @php
           $listRoleID = $user->roles->pluck('id')->toArray();
           @endphp
@@ -53,7 +62,9 @@
           </option>
           @endforeach
         </select>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group mt-3 text-center">
+          <button type="submit" class="btn btn-outline-success">Update</button>
+        </div>
     </form>
   </div>
 </div>

@@ -20,7 +20,7 @@ class EditTrainer
       $id = $request->segment(3);
       // dd($id);
       // \DB::enableQueryLog();
-      $trainees = Role::with('users')->find(Role::TRAINER_ROLE); // get all id of trainee in users table
+      $trainees = Role::with('users')->find(Role::TRAINER_ROLE); // get all id of trainer in users table
       // dd(\DB::getQueryLog());
       // dd($trainees->toArray());
       $trainees_id = $trainees->users->pluck('id')->toArray();

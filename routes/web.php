@@ -28,7 +28,7 @@ Route::group([
   Route::get('/users/create', 'UserController@create')->name('users.create');
   Route::post('/users', 'UserController@store')->name('users.store');
   Route::get('/users/{id}', 'UserController@show')->name('users.show');
-  Route::get('/users/{id}/edit', 'UserController@edit')->name('users.edit');
+  Route::get('/users/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('admin.edit');
   Route::put('/users/{id}', 'UserController@update')->name('users.update');
   Route::delete('/users/{id}', 'UserController@destroy')->name('users.destroy');
   Route::get('/roles', 'RoleController@index')->name('roles.index');
