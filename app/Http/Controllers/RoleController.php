@@ -14,7 +14,7 @@ class RoleController extends Controller
    */
   public function index()
   {
-    $roles =  Role::whereIn('id', [2, 3])->get();
+    $roles =  Role::whereIn('id', [Role::TRAINING_STAFF_ROLE, Role::TRAINER_ROLE])->get();
     return view('roles.index', compact('roles'));
   }
 

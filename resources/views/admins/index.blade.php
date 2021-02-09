@@ -34,9 +34,9 @@
       <th scope="row">{{++$key}}</th>
       <td>{{$item->name}}</td>
       <td>{{$item->email}}</td>
-      <td><a class="btn btn-outline-primary" href="{{route('admin.users.edit', $user->id)}}">Edit</a></td>
+      <td><a class="btn btn-outline-primary" href="{{route('admin.users.edit', $item->id)}}">Edit</a></td>
       <td>
-        <form action="{{route('admin.users.destroy', $user->id)}}" method="post">
+        <form action="{{route('admin.users.destroy', $item->id)}}" method="post">
           @csrf
           @method('DELETE')
           <button type="submit" class="btn btn-outline-danger">Delete</button>
