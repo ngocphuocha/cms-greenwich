@@ -23,7 +23,8 @@ class UserController extends Controller
    */
   public function index()
   {
-    $users = $this->userRepo->getAll(10);
+    $users = $this->userRepo->getAll();
+    // dd($users);
     // dd($users->toArray());
     return view('admins.index', compact('users'));
   }

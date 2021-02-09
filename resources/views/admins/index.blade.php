@@ -25,10 +25,13 @@
     </tr>
     @endforeach
     @else
-    @foreach($users as $key => $user)
+    @php
+    $key = 0;
+    @endphp
+    @foreach($users as $user)
     @foreach ($user->users as $item)
     <tr>
-      <th scope="row">{{$key +1 }}</th>
+      <th scope="row">{{++$key}}</th>
       <td>{{$item->name}}</td>
       <td>{{$item->email}}</td>
       <td><a class="btn btn-outline-primary" href="{{route('admin.users.edit', $user->id)}}">Edit</a></td>
@@ -42,14 +45,12 @@
     </tr>
     @endforeach
     @endforeach
+    {{-- <div class="row justify-content-center ">
+      <div class="col-5">
+        {{$users->links()}}
+    </div>
+    </div> --}}
     @endif
   </tbody>
 </table>
-@if (!isset($role))
-<div class="row justify-content-center ">
-  <div class="col-5">
-    {{$users->links()}}
-  </div>
-</div>
-@endif
 @endsection
