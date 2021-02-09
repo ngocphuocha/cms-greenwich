@@ -48,7 +48,7 @@ class UserController extends Controller
    */
   public function store(CreateUserRequest $request)
   {
-    $user = $this->userRepo->store($request);
+    $this->userRepo->store($request);
     return redirect()->route('admin.users.index')->with(['success' => 'Success']);
   }
 
@@ -137,5 +137,11 @@ class UserController extends Controller
     $user = $this->userRepo->get($id);
     // dd($user);
     return view('trainees.detail', compact('user'));
+  }
+  public function trainerDetail($id)
+  {
+    $user = $this->userRepo->get($id);
+    // dd($user);
+    return view('trainers.detail', compact('user'));
   }
 }

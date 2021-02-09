@@ -61,7 +61,8 @@ class TrainingStaffController extends Controller
    */
   public function store(Request $request)
   {
-    $data = $request->all();
+    $data = $request->except('_token', 'role_id');
+    // dd($data);
     $data['password'] = bcrypt($data['password']);
     $user = User::create($data);
     $user->roles()->attach($request->role_id,  ['created_at' => now(), 'updated_at' => now()]);

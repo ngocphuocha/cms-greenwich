@@ -31,7 +31,9 @@ class UserRepository implements IUserRepository
     /* get user with paginate(8 users in 1 page)
     **/
     // return User::where('id', '<>', 1)->paginate(8);
-    return $this->user->whereIn('id', [2, 3])->paginate($paginate);
+    $users = $this->role->with('users')->whereIn('id', [2, 3])->paginate(8);
+    // dd($users->toArray());
+    return $users;
   }
   public function getRoles()
   {
@@ -43,11 +45,10 @@ class UserRepository implements IUserRepository
   public function store(CreateUserRequest $request)
   {
     $data = $request->all();
-    // dd($data['role_id']);
+    dd($data);
     $data['password'] = bcrypt($data['password']);
     $user = $this->user->create($data);
     $user->roles()->attach($request->role_id, ['created_at' => now(), 'updated_at' => now()]);
-    // $user->roles()->attach([]);
   }
   public function edit($id)
   {

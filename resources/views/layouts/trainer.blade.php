@@ -89,14 +89,14 @@
           <li class="nav-item">
             <a class="nav-link" href=""></a>
           </li>
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">More</a>
             <div class="dropdown-menu" aria-labelledby="dropdownId">
               <a class="dropdown-item text-bold text-danger" href=""></a>
               <a class="dropdown-item disabled" href="#">Action 2</a>
             </div>
-          </li>
+          </li> --}}
         </ul>
         <form class="form-inline my-2 my-lg-0" action="{{route('logout')}}" method="POST">
           @csrf
@@ -122,6 +122,8 @@
             role="button">View course</a>
           <a name="" id="" class="btn btn-primary" href="{{route('trainer.users.edit', \Auth::id())}}"
             role="button">Edit Profile</a>
+          <a name="" id="" class="btn btn-primary" href="{{route('trainer.users.detail', ['id' => \Auth::id()])}}"
+            role="button">View My profile</a>
         </div>
       </div>
       @yield('content')

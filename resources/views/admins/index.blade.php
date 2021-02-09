@@ -26,10 +26,11 @@
     @endforeach
     @else
     @foreach($users as $key => $user)
+    @foreach ($user->users as $item)
     <tr>
       <th scope="row">{{$key +1 }}</th>
-      <td>{{$user->name}}</td>
-      <td>{{$user->email}}</td>
+      <td>{{$item->name}}</td>
+      <td>{{$item->email}}</td>
       <td><a class="btn btn-outline-primary" href="{{route('admin.users.edit', $user->id)}}">Edit</a></td>
       <td>
         <form action="{{route('admin.users.destroy', $user->id)}}" method="post">
@@ -39,6 +40,7 @@
         </form>
       </td>
     </tr>
+    @endforeach
     @endforeach
     @endif
   </tbody>

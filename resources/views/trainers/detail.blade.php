@@ -1,8 +1,8 @@
 {{-- @php
 dd($traineeCourses->toArray());
 @endphp --}}
-@extends('layouts.trainee')
-@section('tilte', 'Profile')
+@extends('layouts.trainer')
+@section('tilte', 'My Profile')
 @section('content')
 <div class="row mt-5">
   <div class="col">
