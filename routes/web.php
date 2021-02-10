@@ -98,7 +98,7 @@ Route::group([
   // trainer
   Route::get('/trainers', 'TrainingStaffController@trainers')->name('trainers.index');
   // Route::post('/trainers', 'TrainingStaffController@trainersStore')->name('trainers.store');
-  Route::get('/trainers/{id}', 'TrainingStaffController@trainersDetail')->name('trainers.detail');
+  Route::get('/trainers/{id}', 'TrainingStaffController@trainersDetail')->name('trainers.detail')->middleware('staff.trainer');
   Route::get('/trainers/{id}/edit', 'TrainingStaffController@trainersEdit')->name('trainers.edit');
   Route::put('/trainers/{id}', 'TrainingStaffController@trainersUpdate')->name('trainers.update');
   Route::delete('/trainers/{id}', 'TrainingStaffController@trainersDestroy')->name('trainers.destroy')->middleware('staff.trainer');

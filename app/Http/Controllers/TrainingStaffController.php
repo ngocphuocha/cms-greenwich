@@ -10,13 +10,17 @@ use App\User;
 use App\TraineeCourse;
 use App\TrainerCourse;
 use App\Repositories\Interfaces\IUserRepository;
+use App\Services\UserService;
+use App\Exceptions\UserException;
 
 class TrainingStaffController extends Controller
 {
   private $userRepository;
-  public function __construct(IUserRepository $userRepository)
+  private $userService;
+  public function __construct(IUserRepository $userRepository, UserService $userService)
   {
     $this->userRepository = $userRepository;
+    $this->userService = $userService;
   }
   /**
    * Display a listing of the resource.
@@ -29,19 +33,12 @@ class TrainingStaffController extends Controller
   }
   public function trainees(Request $request)
   {
-    // $users = User::query(); // create query 
-    if ($request->has('search')) {
-      $users = Role::with(
-        ['users' => function ($query) use ($request) {
-          return $query->where('name', 'like', "%{$request->input('search')}%") // search with name
-            ->orWhere('email', 'like', "%{$request->input('search')}%"); // search with email
-        }]
-      )->where('id', 4)->get();
-      // dd($users->toArray());
-    } else {
-      $users = Role::with('users')->where('id', 4)->get(); // get user with id = 4 in roles table
+    // list trainee and search 
+    try {
+      $users = $this->userService->traineeSearch($request);
+    } catch (UserException $exception) {
+      throw $exception;
     }
-
     // dd($users->toArray());
     return view('training-staffs.trainees', compact('users'));
   }
@@ -76,7 +73,11 @@ class TrainingStaffController extends Controller
   }
   public function traineeDetail($id)
   {
-    $trainee = $this->userRepository->get($id);
+    try {
+      $trainee = $this->userService->show($id);
+    } catch (UserException $exception) {
+      throw $exception;
+    }
     return view('training-staffs.detail-trainee', compact('trainee'));
   }
   public function trainersDetail($id)
