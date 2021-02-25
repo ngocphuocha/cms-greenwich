@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EditUserRequest;
-use App\Http\Requests\EditTraineeRequest;
 use Illuminate\Http\Request;
 use App\Role;
 use App\User;
@@ -22,15 +20,6 @@ class TrainingStaffController extends Controller
     $this->userRepository = $userRepository;
     $this->userService = $userService;
   }
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index()
-  {
-    //
-  }
   public function trainees(Request $request)
   {
     // list trainee and search 
@@ -39,7 +28,6 @@ class TrainingStaffController extends Controller
     } catch (UserException $exception) {
       throw $exception;
     }
-    // dd($users->toArray());
     return view('training-staffs.trainees', compact('users'));
   }
   /**
@@ -51,7 +39,6 @@ class TrainingStaffController extends Controller
   public function create()
   {
     $role = Role::where('id', '4')->get(); // get trainee role
-    // dd($role[0]->id);
     return view('training-staffs.create', compact('role'));
   }
 
@@ -65,7 +52,6 @@ class TrainingStaffController extends Controller
   public function store(Request $request)
   {
     $data = $request->except('_token', 'role_id');
-    // dd($data);
     $data['password'] = bcrypt($data['password']);
     $user = User::create($data);
     $user->roles()->attach($request->role_id,  ['created_at' => now(), 'updated_at' => now()]);
@@ -116,27 +102,19 @@ class TrainingStaffController extends Controller
   {
     $user = User::find($id);
     $traineeCourses = TraineeCourse::with('course')->where('user_id', $user->id)->get(); // get trainee course
-    // dd($traineeCourses->toArray());
     return view('training-staffs.assign', compact(['user', 'traineeCourses']));
   }
   // store assign for trainee with id=?
   public function traineeAssign(Request $request, $id)
   {
     $user = User::find($id); // find user with id
-    // get id of user
     $data = $request->except('_token');
-    // dd($data['course_id']);
-    // dd($data);
     $user->traineeCourses()->create($data);
     return redirect()->back()->with(['success' => 'Add Success!']);
   }
   // delete trainee assign
   public function traineeAssignDelete($id, $course_id)
   {
-    // \DB::enableQueryLog();
-
-    // dd(\DB::getQueryLog());
-
     try {
       TraineeCourse::where('user_id', $id)
         ->where('course_id', $course_id)
@@ -155,30 +133,6 @@ class TrainingStaffController extends Controller
     $trainee->update($data);
     return redirect()->back()->with(['success' => 'Update Success!']);
   }
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function update(Request $request, $id)
-  {
-    //
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy($id)
-  {
-    //
-  }
-  // trainee destroy
-
   public function traineeDestroy($id)
   {
     TraineeCourse::where('user_id', $id)->delete();
@@ -197,7 +151,6 @@ class TrainingStaffController extends Controller
             ->orWhere('email', 'like', "%{$request->input('search')}%"); // search with email
         }]
       )->where('id', 3)->get();
-      // dd($users->toArray());
     } else {
       $users = Role::with('users')->where('id', 3)->get(); // get user with id = 4 in roles table
     }
@@ -228,26 +181,19 @@ class TrainingStaffController extends Controller
   {
     $user = User::find($id);
     $trainerCourses = TrainerCourse::with('course')->where('user_id', $user->id)->get(); // get trainee course
-    // dd($traineeCourses->toArray());
     return view('training-staffs.trainers.assign', compact(['user', 'trainerCourses']));
   }
   // store assign for trainee with id=?
   public function trainerAssign(Request $request, $id)
   {
     $user = User::find($id); // find user with id
-    // get id of user
     $data = $request->except('_token');
-    // dd($data['course_id']);
-    // dd($data);
     $user->trainerCourses()->create($data);
     return redirect()->back()->with(['success' => 'Add Success!']);
   }
   // delete trainee assign
   public function trainerAssignDelete($id, $course_id)
   {
-    // \DB::enableQueryLog();
-
-    // dd(\DB::getQueryLog());
     try {
       TrainerCourse::where('user_id', $id)
         ->where('course_id', $course_id)
